@@ -1,0 +1,33 @@
+# Raw Kaggle CSVs are ~120 MB — download them from Kaggle, do not commit
+data/raw/*.csv
+data/raw/*.zip
+
+# Processed CSVs are ~80 MB in total and fully reproducible from notebook 02;
+# keep the small analysis outputs (rfm, cohorts, summaries) but not the big tables
+data/processed/orders.csv
+data/processed/order_items.csv
+data/processed/customers.csv
+data/processed/reviews.csv
+data/processed/payments.csv
+data/processed/order_payments_summary.csv
+
+# Environment
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+
+# Power BI temp files
+*.pbix.bak
+dashboard/*.tmp
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Regenerable by notebook 02 (keep repo under ~20 MB); analysis outputs stay committed
+data/processed/products.csv
+data/processed/geography.csv
+
+# Local run artefacts
+sql/run_log.txt
+report/insight_report.html

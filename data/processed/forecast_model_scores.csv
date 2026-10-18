@@ -1,0 +1,5 @@
+,holdout_mape_pct
+ses_level,13.89
+holt_damped,29.02
+arima_111_drift,30.94
+naive_3m_avg,13.36

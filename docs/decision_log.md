@@ -1,0 +1,31 @@
+# Decision log
+
+Analytical and modelling choices, why they were made, and what alternatives were rejected. Interviewers ask about judgement, not code — keep this current.
+
+| Date | Decision | Why | Alternative rejected |
+|---|---|---|---|
+| 2026-10-18 | Fact grain = order item, not order | Sellers, products and freight live at item level; order-level facts would force averaging. | Order-level fact (loses seller/product detail). |
+| 2026-10-18 | Customer key = `customer_unique_id` | `customer_id` is regenerated per order, so repeat rate on it is always 0%. | Using `customer_id` as supplied. |
+| 2026-10-18 | Revenue metrics use delivered orders only; funnel/cancellation metrics use all statuses | Canceled/unavailable orders never generated realised revenue. | Counting all orders as revenue. |
+| 2026-10-18 | Outliers in price/freight are flagged, not dropped | They are real high-ticket sales; dropping would understate revenue. Flag lets dashboards exclude on demand. | Dropping beyond 1.5×IQR. |
+| 2026-10-18 | Geolocation aggregated to mean lat/lng per zip prefix | 1M rows for ~19k prefixes; one coordinate per prefix is enough for a state/city map. | Keeping all rows (explodes joins). |
+| 2026-10-18 | Reviews: keep the latest answered review per order (551 rows removed) | 547 orders had >1 review and 1,603 rows shared a review_id. One row per order prevents review counts inflating on joins. | Keep first review; average scores per order. |
+| 2026-10-18 | 33 geolocation points outside Brazil's bounding box dropped | Obvious data-entry errors that would distort mean coordinates. | Keep and let the mean absorb them. |
+| 2026-10-18 | Two missing category translations hand-filled; null category → `unknown` | Keeps 610 uncategorised products visible in category charts instead of dropping them. | Drop uncategorised products. |
+| 2026-10-18 | `is_late` compared at day granularity (delivered date vs promised date) | Promised date has no time component; a parcel delivered at 18:00 on the promised day is not late. | Timestamp comparison (over-counts late). |
+| 2026-10-18 | Payments kept row-level plus an order-level summary (`main_payment_type` = largest payment) | Payments are 1-to-many; the summary lets the fact table carry payment type without fan-out. | Join payments directly to items. |
+| 2026-10-18 | Revenue = SUM(price); GMV = SUM(price + freight) | Price is what sellers earn and what Olist takes commission on; freight is pass-through to carriers. Both are exposed. | Using payment_value (includes vouchers/instalment effects). |
+| 2026-10-18 | Stage the *cleaned* CSVs in Postgres (`stg`), not the raw Kaggle files | Cleaning is documented once in Python with before/after counts; SQL focuses on modelling. Raw files remain in data/raw for audit. | Re-doing cleaning in SQL (two sources of truth). |
+| 2026-10-18 | Order-level attributes (status, lateness, payment type, review) carried on the item fact as degenerate dimensions; order-level KPIs read `v_orders` | Most dashboard filters work without joins; the view stops multi-item orders inflating AOV, repeat rate and review averages. | Separate fact_orders table (duplicates logic). |
+| 2026-10-18 | Time-series queries trimmed to 2017-01 → 2018-08 | Sep–Dec 2016 has 329 orders total and Sep–Oct 2018 has 20; partial months distort MoM growth and forecasts. | Use the full range. |
+| 2026-10-18 | SQL validated with DuckDB before PostgreSQL was installed | Same DDL/CTE/window dialect; only `TO_CHAR` needed a test-side shim. Postgres run still to be confirmed. | Wait for the install. |
+| 2026-10-18 | RFM: Frequency scored with fixed thresholds (1→1, 2→3, 3→4, 4+→5), R and M by quintile | 97% of customers have one order, so quintiles on F collapse to a single bin. Fixed thresholds keep the 1–5 scale meaningful. | Pure quantile scoring (standard recipe). |
+| 2026-10-18 | RFM snapshot date = day after the last order in the data, not today | Data ends Aug 2018; using today would make every customer "lost". | `datetime.now()`. |
+| 2026-10-18 | Cohort cells beyond the data horizon set to NaN, not 0 | A 2018-07 cohort cannot have M+3 retention yet; zero would drag down the average curve. | Fill with 0. |
+| 2026-10-18 | Delivery-vs-review test = Mann–Whitney U (Welch t as robustness check), plus Cliff's δ and bootstrap CI | Review scores are ordinal 1–5 and heavily skewed; a t-test's normality assumption is poor. Effect size matters more than p with n≈96k. | t-test alone. |
+| 2026-10-18 | Lateness breakdowns run *within* state and category | Checks that the review penalty is not a geography or product-mix artefact (it holds in 21/21 states, 26/26 categories). | Overall comparison only. |
+| 2026-10-18 | Seller health score only for sellers with ≥30 delivered orders; composite = mean of scaled on-time %, avg review, inverted cancel % | Rates on <30 orders are noise; equal weights are transparent and defensible. | Weighted score tuned to revenue. |
+| 2026-10-18 | Forecast: no seasonal model; compare level / damped-trend / ARIMA+drift on a 3-month hold-out against a naive benchmark; select by MAPE | 20 monthly points cannot support a 12-month seasonal cycle. Trend models overshot the hold-out by ~30%; the level model (13.9%) barely matches naive (13.4%), which is reported honestly. | Prophet/SARIMA with yearly seasonality. |
+| 2026-10-18 | Forecast revenue measured at purchase month for delivered orders | Consistent with the revenue definition elsewhere; noted that the last months are slightly understated by in-transit orders. | Delivery-month revenue. |
+| 2026-10-18 | Insight report built from notebook outputs only; impact estimates are linear scalings of measured effects (e.g. halving lateness = half the measured 28% reduction in 1–2 star reviews) | Keeps every number traceable to a cell; avoids inventing uplift figures. | Benchmark-based uplift assumptions. |
+| 2026-10-18 | Power BI model: order-grain `orders` table (merged in Power Query) as a bridge between `order_items` and the dims, with pre-aggregated tables left unrelated | Keeps item-level and order-level measures correct simultaneously; mirrors `dw.v_orders`. | Single flat table (double-counts multi-item orders). |

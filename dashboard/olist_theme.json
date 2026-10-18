@@ -1,0 +1,49 @@
+{
+  "name": "Olist analytics",
+  "dataColors": ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"],
+  "background": "#fcfcfb",
+  "foreground": "#0b0b0b",
+  "tableAccent": "#2a78d6",
+  "good": "#0ca30c",
+  "neutral": "#fab219",
+  "bad": "#d03b3b",
+  "maximum": "#0d366b",
+  "center": "#6da7ec",
+  "minimum": "#cde2fb",
+  "textClasses": {
+    "title":     { "fontFace": "Segoe UI Semibold", "fontSize": 14, "color": "#0b0b0b" },
+    "label":     { "fontFace": "Segoe UI", "fontSize": 10, "color": "#52514e" },
+    "callout":   { "fontFace": "Segoe UI Semibold", "fontSize": 28, "color": "#0b0b0b" },
+    "header":    { "fontFace": "Segoe UI Semibold", "fontSize": 12, "color": "#0b0b0b" }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#fcfcfb" } }, "transparency": 0 }],
+        "border": [{ "show": false }],
+        "title": [{ "show": true, "fontSize": 12, "fontFamily": "Segoe UI Semibold", "fontColor": { "solid": { "color": "#0b0b0b" } }, "alignment": "left" }],
+        "categoryAxis": [{ "gridlineShow": false, "labelColor": { "solid": { "color": "#898781" } }, "titleColor": { "solid": { "color": "#52514e" } } }],
+        "valueAxis": [{ "gridlineShow": true, "gridlineColor": { "solid": { "color": "#e1e0d9" } }, "gridlineStyle": "solid", "labelColor": { "solid": { "color": "#898781" } }, "titleColor": { "solid": { "color": "#52514e" } } }],
+        "legend": [{ "position": "Top", "fontSize": 9, "labelColor": { "solid": { "color": "#52514e" } } }],
+        "labels": [{ "color": { "solid": { "color": "#52514e" } }, "fontSize": 9 }]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [{ "fontSize": 28, "color": { "solid": { "color": "#0b0b0b" } } }],
+        "categoryLabels": [{ "fontSize": 10, "color": { "solid": { "color": "#52514e" } } }]
+      }
+    },
+    "slicer": {
+      "*": {
+        "header": [{ "fontSize": 10, "fontColor": { "solid": { "color": "#52514e" } } }],
+        "items": [{ "fontSize": 10 }]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#f9f9f7" } }, "transparency": 0 }]
+      }
+    }
+  }
+}
