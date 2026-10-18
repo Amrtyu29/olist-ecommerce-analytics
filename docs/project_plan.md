@@ -156,7 +156,7 @@ Resume bullets (template — replace with your real numbers)
 Built an end-to-end e-commerce analytics pipeline on 100k+ orders: cleaned and modelled 9 raw tables into a PostgreSQL star schema and wrote 20+ analytical SQL queries (CTEs, window functions).
 Segmented 96k customers using RFM analysis and cohort retention in Python; identified that the top 15% of customers generated ~40% of revenue and overall repeat rate was under 3%.
 Quantified that late deliveries reduced average review scores by 1.5 points (4.3 → 2.8) and were concentrated in 3 states; delivered a 4-page Power BI dashboard with 12 KPIs and a prioritised recommendation report.
-Put it under a Projects heading with the GitHub link and the tech stack in brackets: Olist E-commerce Analytics — Python, SQL (PostgreSQL), Power BI — github.com/yourname/olist-ecommerce-analytics.
+Put it under a Projects heading with the GitHub link and the tech stack in brackets: Olist E-commerce Analytics — Python, SQL (PostgreSQL), Power BI — github.com/Amrtyu29/olist-ecommerce-analytics.
 GitHub README outline
 Title + one-line summary + badges (Python, PostgreSQL, Power BI)
 Business problem (3 lines)

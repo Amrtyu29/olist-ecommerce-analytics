@@ -2,6 +2,8 @@
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791) ![Power BI](https://img.shields.io/badge/Power%20BI-Desktop-F2C811)
 
+**Repo:** https://github.com/Amrtyu29/olist-ecommerce-analytics
+
 End-to-end sales and customer analytics on ~100k real marketplace orders: raw CSVs → Python cleaning → PostgreSQL star schema → Python analysis → Power BI dashboard → one-page recommendation report.
 
 > **Status:** Phases 1–3 and 5 complete; Phase 4 (Power BI) has a full build guide and theme but the `.pbix` and screenshots are still to be produced in Power BI Desktop. Notebooks 01–07 run end to end; `sql/01–04` build a star schema and 18 analysis queries (validated with DuckDB; the PostgreSQL run itself is not yet confirmed — see [docs/postgres_setup.md](docs/postgres_setup.md)).

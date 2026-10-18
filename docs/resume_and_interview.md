@@ -19,7 +19,7 @@ Every number here is printed by a notebook cell or a SQL query in this repo. If 
 
 ### Project line (under a *Projects* heading)
 
-**Olist E-commerce Analytics** — Python (pandas, scipy, statsmodels), SQL (PostgreSQL), Power BI — github.com/<your-handle>/olist-ecommerce-analytics
+**Olist E-commerce Analytics** — Python (pandas, scipy, statsmodels), SQL (PostgreSQL), Power BI — github.com/Amrtyu29/olist-ecommerce-analytics
 
 ### Three bullets (STAR, each with a metric)
 
@@ -87,7 +87,7 @@ It is low, but it is plausible for this business model: Olist sells through larg
 
 ## 4. Checklist before you send
 
-- [ ] Replace `<your-handle>` with your GitHub username; the repo must be public with the README screenshots in place.
+- [ ] Replace `Amrtyu29` with your GitHub username; the repo must be public with the README screenshots in place.
 - [ ] Build the `.pbix` from `docs/powerbi_guide.md` and add the four screenshots — recruiters look at images, not notebooks.
 - [ ] Re-run notebooks 01–07 once more and diff the numbers in this file against the outputs.
 - [ ] Pin the repo on your GitHub profile.
