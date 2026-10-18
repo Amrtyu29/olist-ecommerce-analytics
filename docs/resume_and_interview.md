@@ -87,7 +87,7 @@ It is low, but it is plausible for this business model: Olist sells through larg
 
 ## 4. Checklist before you send
 
-- [ ] Replace `Amrtyu29` with your GitHub username; the repo must be public with the README screenshots in place.
+- [x] GitHub handle filled in; the repo is public at https://github.com/Amrtyu29/olist-ecommerce-analytics (README screenshots still to add)
 - [ ] Build the `.pbix` from `docs/powerbi_guide.md` and add the four screenshots — recruiters look at images, not notebooks.
 - [ ] Re-run notebooks 01–07 once more and diff the numbers in this file against the outputs.
 - [ ] Pin the repo on your GitHub profile.
